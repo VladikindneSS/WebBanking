@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8063:8063" # Можно задать свой порт
+    volumes:
+      - ./auth-service/private.pem:/app/private.pem
+    network_mode: "host"  # Используем хостовую сеть
+
+  banking-service:
+    build: ./banking-service
+    ports:
+      - "8064:8064" # Можно задать свой порт
+    network_mode: "host"  # Используем хостовую сеть
+
+networks:
+  banking-net:
+    driver: bridge  # Мостовая сеть, но контейнеры используют хостовую сеть для подключения к базе данных
